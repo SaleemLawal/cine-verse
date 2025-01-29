@@ -37,51 +37,25 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllData = async () => {
       try {
-        const data = await fetchPopularMovies();
-        setPopularMovies(data);
-      } catch (error) {
-        console.error("Error fetching popular movies:", error);
-      }
-    };
-    fetchData();
-  }, []);
+        const [popularData, topRatedData, topRatedSeriesData, popularSeriesData] = await Promise.all([
+          fetchPopularMovies(),
+          fetchTopRatedMovies(),
+          fetchTopRatedSeries(),
+          fetchPopularSeries()
+        ]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchTopRatedMovies();
-        setTopRatedMovies(data);
+        setPopularMovies(popularData);
+        setTopRatedMovies(topRatedData);
+        setTopRatedSeries(topRatedSeriesData);
+        setPopularSeries(popularSeriesData);
       } catch (error) {
-        console.error("Error fetching top ratedmovies:", error);
+        console.error("Error fetching data:", error);
       }
     };
-    fetchData();
-  }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchTopRatedSeries();
-        setTopRatedSeries(data);
-      } catch (error) {
-        console.error("Error fetching top ratedmovies:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchPopularSeries();
-        setPopularSeries(data);
-      } catch (error) {
-        console.error("Error fetching top ratedmovies:", error);
-      }
-    };
-    fetchData();
+    fetchAllData();
   }, []);
 
   return (

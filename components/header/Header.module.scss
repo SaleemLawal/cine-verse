@@ -13,6 +13,7 @@
   justify-content: space-between;
   align-items: center;
   @include container;
+  z-index: 2000;
 
   a {
     color: $text-nav;

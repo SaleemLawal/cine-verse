@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.scss";
 // import styles from "./layout.module.scss";
-import Header from "@/component/header/Header";
-import MovieBackdrop from "@/component/HomePageBackdrop/MovieBackdrop";
+import Header from "@/components/header/Header";
+import MovieBackdrop from "@/components/HomePageBackdrop/MovieBackdrop";
 import { MoviesProvider } from "@/context/MoviesContext";
 
 export const metadata: Metadata = {
