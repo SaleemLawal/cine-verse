@@ -10,3 +10,14 @@ export const fetchNowPlaying = async () => {
     throw error;
   }
 };
+
+export const fetchVideos = async (movie_id: number) => {
+  // console.log("movie id is", movie_id);
+  try {
+    const response = await apiClient.get(`/movie/${movie_id}/videos`);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching now playing movies:", error);
+    throw error;
+  }
+};

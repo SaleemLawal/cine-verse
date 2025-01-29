@@ -2,29 +2,14 @@
 import { useState, useEffect } from "react";
 import { fetchNowPlaying } from "@/api/movies/fetchMovies";
 
-interface MovieItem {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+import { MovieItem } from "@/types/Movie";
 
 // simulate an algo that would switch the background image every 5 seconds from the items returned from calling fetchNowPlaying
 const useNowPlayingBackdrop = () => {
   const [data, setData] = useState<MovieItem[]>([]);
   const [index, setIndex] = useState(0);
-  const [currentImageUrl, setCurrentImageUrl] = useState("");
-  const [nextImageUrl, setNextImageUrl] = useState("");
+  const [currentMovie, setcurrentMovie] = useState<MovieItem | null>(null);
+  const [nextMovie, setnextMovie] = useState<MovieItem | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
@@ -41,8 +26,8 @@ const useNowPlayingBackdrop = () => {
 
   useEffect(() => {
     if (data.length > 0) {
-      setCurrentImageUrl(data[0].backdrop_path);
-      setNextImageUrl(data[0].backdrop_path);
+      setcurrentMovie(data[0]);
+      setnextMovie(data[0]);
     }
   }, [data]);
 
@@ -51,20 +36,20 @@ const useNowPlayingBackdrop = () => {
     const interval = setInterval(() => {
       if (data.length > 0) {
         const nextIndex = (index + 1) % data.length;
-        setNextImageUrl(data[nextIndex].backdrop_path);
+        setnextMovie(data[nextIndex]);
         setIsTransitioning(true);
 
         setTimeout(() => {
-          setCurrentImageUrl(data[nextIndex].backdrop_path);
+          setcurrentMovie(data[nextIndex]);
           setIndex(nextIndex);
           setIsTransitioning(false);
         }, 1000);
       }
-    }, 7500);
+    }, 10000);
     return () => clearInterval(interval);
   }, [data, index]);
 
-  return { currentImageUrl, nextImageUrl, isTransitioning };
+  return { currentMovie, nextMovie, isTransitioning };
 };
 
 export default useNowPlayingBackdrop;
