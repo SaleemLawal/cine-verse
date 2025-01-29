@@ -3,6 +3,7 @@ import "./globals.scss";
 // import styles from "./layout.module.scss";
 import Header from "@/component/header/Header";
 import MovieBackdrop from "@/component/HomePageBackdrop/MovieBackdrop";
+import { MoviesProvider } from "@/context/MoviesContext";
 
 export const metadata: Metadata = {
   title: "Cine Verse",
@@ -17,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MovieBackdrop />
-        <Header />
-        <main>{children}</main>
+        <MoviesProvider>
+          <MovieBackdrop />
+          <Header />
+          <div>{children}</div>
+        </MoviesProvider>
       </body>
     </html>
   );

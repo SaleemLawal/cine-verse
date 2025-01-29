@@ -8,15 +8,18 @@ import styles from "./LinkItem.module.scss";
 interface LinkItemProps {
   href: string;
   name: string;
+  active: boolean;
 }
 
-const LinkItem = ({ href, name }: LinkItemProps) => {
+const LinkItem = ({ href, name, active }: LinkItemProps) => {
   const currentPath = usePathname();
+  let classModifier = undefined;
+
+  if (active) {
+    classModifier = currentPath === href ? styles.active : undefined;
+  }
   return (
-    <Link
-      href={href}
-      className={currentPath === href ? styles.active : undefined}
-    >
+    <Link href={href} className={classModifier}>
       {name}
     </Link>
   );

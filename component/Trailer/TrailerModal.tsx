@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import React from "react";
 import styles from "./Trailer.module.scss";
 import { VideoItem } from "@/types/Movie";

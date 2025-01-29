@@ -15,13 +15,13 @@ const Header = () => {
         </Link>
         <ul>
           <li>
-            <LinkItem href="/" name="Home" />
+            <LinkItem href="/" name="Home" active={true} />
           </li>
           <li>
-            <LinkItem href="/movies" name="Movies" />
+            <LinkItem href="/movies" name="Movies" active={true} />
           </li>
           <li>
-            <LinkItem href="/series" name="Series" />
+            <LinkItem href="/series" name="Series" active={true} />
           </li>
         </ul>
       </header>
