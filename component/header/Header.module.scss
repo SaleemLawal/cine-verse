@@ -1,0 +1,35 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  font-weight: 700;
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include container;
+
+  a {
+    color: $text-primary;
+
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    & span {
+      font-size: 1.8rem;
+    }
+  }
+
+  & ul {
+    font-size: 1.475rem;
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+}

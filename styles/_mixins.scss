@@ -1,0 +1,14 @@
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin boxShadow($color: #000, $opacity: 0.2, $radius: 5px, $x: 0, $y: 0) {
+  box-shadow: $x $y $radius $radius rgba($color, $opacity);
+}
+
+@mixin container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
