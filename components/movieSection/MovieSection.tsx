@@ -8,6 +8,15 @@ interface MovieSectionProps {
   sectionType: string;
 }
 const MovieSection = ({ sectionName, sectionType }: MovieSectionProps) => {
+  const splitted = sectionType.split(" ");
+  let type;
+  if (splitted.length === 2) {
+    type = splitted[0];
+  } else {
+    type = splitted[0] + "_" + splitted[1];
+  }
+  const movieType = splitted.length > 2 ? splitted[2] : splitted[1];
+
   return (
     <section className={styles["movie-section"]}>
       <div className={styles.section__header}>
@@ -16,12 +25,16 @@ const MovieSection = ({ sectionName, sectionType }: MovieSectionProps) => {
           className={`text-[1.5rem] px-6 py-5 rounded-full border-gray-400 ${styles.button}`}
           variant="outline"
         >
-          <LinkItem href={sectionType} name="View all" active={false} />
+          <LinkItem
+            href={`/${movieType}?type=${type}`}
+            name="View all"
+            active={false}
+          />
         </Button>
       </div>
 
       {/* GRID */}
-      <MovieGrid sectionType={sectionType} />
+      <MovieGrid type={movieType} sectionType={sectionType} />
     </section>
   );
 };

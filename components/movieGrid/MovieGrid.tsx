@@ -5,7 +5,7 @@ import { useMovies } from "@/context/MoviesContext";
 import MovieCard from "../movieCard/MovieCard";
 import { usePathname } from "next/navigation";
 
-const MovieGrid = ({ sectionType }: { sectionType: string }) => {
+const MovieGrid = ({ type, sectionType }: { type: string, sectionType?: string }) => {
   const { popularMovies, topRatedMovies, topRatedSeries, popularSeries } =
     useMovies();
   const pathname = usePathname();
@@ -35,7 +35,7 @@ const MovieGrid = ({ sectionType }: { sectionType: string }) => {
               key={movie.original_title || movie.name}
               className={styles.grid__item}
             >
-              <MovieCard movie={movie} sectionType={sectionType} />
+              <MovieCard movie={movie} type={type} />
             </div>
           );
         })}

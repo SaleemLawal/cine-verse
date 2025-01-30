@@ -6,7 +6,7 @@ import Footer from "@/components/footer/Footer";
 import Backdrop from "@/components/backdrop/Backdrop";
 
 export const metadata: Metadata = {
-  title: "Cine Verse",
+  title: "CineVerse",
   description: "Cine Verse is a movie review website",
 };
 

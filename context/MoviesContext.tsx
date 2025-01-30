@@ -37,6 +37,13 @@ const MoviesContext = createContext<MoviesContextValue>({
   fetchPopularSeriesPage: async () => {},
 });
 
+const helperFilter = (data: MovieItem[], prev: MovieItem[]) => {
+  const newMovies = data.filter(
+    (movie: MovieItem) => !prev.some((prevMovie) => prevMovie.id === movie.id)
+  );
+  return newMovies;
+};
+
 export function MoviesProvider({ children }: { children: React.ReactNode }) {
   const [popularMovies, setPopularMovies] = useState<MovieItem[]>([]);
   const [topRatedMovies, setTopRatedMovies] = useState<MovieItem[]>([]);
@@ -44,43 +51,64 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
   const [popularSeries, setPopularSeries] = useState<MovieItem[]>([]);
 
   const fetchPopularMoviesPage = useCallback(async (page: number) => {
-    if (page === 1) setPopularMovies([]);
     try {
       const data = await fetchPopularMovies(page);
-      setPopularMovies((prev) => [...prev, ...data]);
+      if (page === 1) {
+        setPopularMovies(data);
+        return;
+      }
+      setPopularMovies((prev) => {
+        const newMovies = helperFilter(data, prev);
+        return [...prev, ...newMovies];
+      });
     } catch (error) {
       console.error("Error fetching popular movies:", error);
     }
   }, []);
 
   const fetchTopRatedMoviesPage = useCallback(async (page: number) => {
-    if (page === 1) setTopRatedMovies([]);
-
     try {
       const data = await fetchTopRatedMovies(page);
-      setTopRatedMovies((prev) => [...prev, ...data]);
+      if (page === 1) {
+        setTopRatedMovies(data);
+        return;
+      }
+      setTopRatedMovies((prev) => {
+        const newMovies = helperFilter(data, prev);
+        return [...prev, ...newMovies];
+      });
     } catch (error) {
       console.error("Error fetching top rated movies:", error);
     }
   }, []);
 
   const fetchTopRatedSeriesPage = useCallback(async (page: number) => {
-    if (page === 1) setTopRatedSeries([]);
-
     try {
       const data = await fetchTopRatedSeries(page);
-      setTopRatedSeries((prev) => [...prev, ...data]);
+      if (page === 1) {
+        setTopRatedSeries(data);
+        return;
+      }
+      setTopRatedSeries((prev) => {
+        const newMovies = helperFilter(data, prev);
+        return [...prev, ...newMovies];
+      });
     } catch (error) {
       console.error("Error fetching top rated series:", error);
     }
   }, []);
 
   const fetchPopularSeriesPage = useCallback(async (page: number) => {
-    if (page === 1) setPopularSeries([]);
-
     try {
       const data = await fetchPopularSeries(page);
-      setPopularSeries((prev) => [...prev, ...data]);
+      if (page === 1) {
+        setPopularSeries(data);
+        return;
+      }
+      setPopularSeries((prev) => {
+        const newMovies = helperFilter(data, prev);
+        return [...prev, ...newMovies];
+      });
     } catch (error) {
       console.error("Error fetching popular series:", error);
     }
@@ -112,6 +140,7 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     fetchPopularMoviesPage(1);
   }, [fetchPopularMoviesPage]);
+
   useEffect(() => {
     fetchTopRatedMoviesPage(1);
   }, [fetchTopRatedMoviesPage]);

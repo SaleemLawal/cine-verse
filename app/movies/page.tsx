@@ -1,23 +1,47 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./movies.module.scss";
 import MovieGrid from "@/components/movieGrid/MovieGrid";
 import { Button } from "@/components/ui/button";
 import { useMovies } from "@/context/MoviesContext";
+import { useSearchParams } from "next/navigation";
 
 const MoviesPage = () => {
-  const { fetchPopularMoviesPage } = useMovies();
+  const searchParams = useSearchParams();
+  const typeParam = searchParams.get("type");
+
+  const { fetchPopularMoviesPage, fetchTopRatedMoviesPage } = useMovies();
   const [currentPage, setCurrentPage] = React.useState(1);
 
   function handlePageChange(newPage: number) {
     setCurrentPage(newPage);
-    fetchPopularMoviesPage(newPage);
+    if (!typeParam || typeParam === "popular") {
+      fetchPopularMoviesPage(newPage);
+    } else {
+      fetchTopRatedMoviesPage(newPage);
+    }
   }
+
+  useEffect(() => {
+    setCurrentPage(1);
+    if (!typeParam || typeParam === "popular") {
+      fetchPopularMoviesPage(1);
+    } else {
+      fetchTopRatedMoviesPage(1);
+    }
+  }, [typeParam, fetchPopularMoviesPage, fetchTopRatedMoviesPage]);
 
   return (
     <div className={"wrapper"}>
       <main className={"page-content"}>
-        <MovieGrid sectionType="popular movies" />
+        <MovieGrid
+          sectionType={
+            !typeParam || typeParam === "popular"
+              ? "popular movies"
+              : "top rated movies"
+          }
+          type="movies"
+        />
 
         <div className={styles["button-wrapper"]}>
           <Button

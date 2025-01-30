@@ -2,6 +2,15 @@
 @use "../../styles/mixins.scss" as *;
 
 .movie-card {
+  position: relative;
+  &__image-fade {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+
+    &[data-loaded="true"] {
+      opacity: 1;
+    }
+  }
   &__image {
     position: relative;
 
