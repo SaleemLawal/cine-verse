@@ -2,11 +2,38 @@
 @use "../../styles/mixins.scss" as *;
 
 .movie-card {
-  & img {
-    border-radius: 1rem;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
-    width: auto;
-    margin-bottom: 1rem;
+  &__image {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 1rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      background-image: url("/YouTube.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 48px;
+      pointer-events: none;
+      transition: all 0.3s ease-in-out;
+      opacity: 0;
+    }
+
+    &:hover::after {
+      cursor: pointer;
+      opacity: 1;
+    }
+
+    & img {
+      border-radius: 1rem;
+      box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+      width: auto;
+      margin-bottom: 1rem;
+    }
   }
 
   & h2 {

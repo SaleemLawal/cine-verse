@@ -1,0 +1,17 @@
+@use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
+
+.bg {
+  @include flexCenter;
+  background-image: url("/bg.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 14rem;
+
+  & h2 {
+    color: $text-light-gray;
+    font-size: 2rem;
+    margin-top: 5rem;
+  }
+}

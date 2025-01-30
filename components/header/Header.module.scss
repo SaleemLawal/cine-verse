@@ -1,6 +1,21 @@
 @use "../../styles/variables" as *;
 @use "../../styles/mixins" as *;
 
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1999;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+
+  &.blur {
+    background: $bg-black-overlay;
+    backdrop-filter: blur(8px);
+  }
+}
+
 .header {
   position: fixed;
   top: 0;

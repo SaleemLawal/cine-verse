@@ -1,0 +1,29 @@
+@use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
+
+.footer {
+  @include flexCenter;
+  background-image: url("/bg.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 35rem;
+
+  gap: 2rem;
+  flex-direction: column;
+
+  &__grid-links {
+    color: red;
+    display: grid;
+    gap: 3rem;
+    grid-template-areas:
+      "link link link"
+      "link link link"
+      "link link link"
+      "link link link";
+  }
+
+  &__grid-link {
+    color: $text-nav;
+  }
+}

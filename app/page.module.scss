@@ -1,11 +1,8 @@
 @use "../styles/variables" as *;
 @use "../styles/mixins.scss" as *;
 
-.wrapper {
-  background-color: $bg-body;
-}
-.page {
-    color: white;
-    @include container;
-    padding: 10rem 0;
-}
+// .page {
+//   color: white;
+//   @include container;
+//   padding: 10rem 0 5rem 0;
+// }

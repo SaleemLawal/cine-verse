@@ -1,9 +1,9 @@
 import MovieSection from "@/components/movieSection/MovieSection";
-import styles from "./page.module.scss";
+// import styles from "./page.module.scss";
 export default function Home() {
   return (
-    <div className={styles.wrapper}>
-      <main className={styles.page}>
+    <div className={"wrapper"}>
+      <main className={"page-content"}>
         <MovieSection
           sectionName="Trending Movies"
           sectionType="popular movies"
