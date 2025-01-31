@@ -2,7 +2,6 @@
 import React, {
   createContext,
   useContext,
-  useState,
   useEffect,
   useMemo,
   useCallback,
@@ -15,9 +14,8 @@ import {
   fetchMovies,
   fetchSeries,
 } from "@/api/movies/fetchMovies";
-import { MovieItem } from "@/types/Movie";
 import { MoviesContextValue } from "@/types/Movie";
-import { filterHelper } from "@/lib/utils";
+import useContextReducer from "@/hooks/useContextReducer";
 
 const MoviesContext = createContext<MoviesContextValue>({
   popularMovies: [],
@@ -35,117 +33,101 @@ const MoviesContext = createContext<MoviesContextValue>({
 });
 
 export function MoviesProvider({ children }: { children: React.ReactNode }) {
-  const [popularMovies, setPopularMovies] = useState<MovieItem[]>([]);
-  const [topRatedMovies, setTopRatedMovies] = useState<MovieItem[]>([]);
-  const [topRatedSeries, setTopRatedSeries] = useState<MovieItem[]>([]);
-  const [popularSeries, setPopularSeries] = useState<MovieItem[]>([]);
-  const [movies, setMovies] = useState<MovieItem[]>([]);
-  const [series, setSeries] = useState<MovieItem[]>([]);
+  const { state, dispatch } = useContextReducer();
 
-  const fetchPopularMoviesPage = useCallback(async (page: number) => {
-    try {
-      const data = await fetchPopularMovies(page);
-      if (page === 1) {
-        setPopularMovies(data);
-        return;
+  const fetchPopularMoviesPage = useCallback(
+    async (page: number) => {
+      try {
+        const data = await fetchPopularMovies(page);
+        dispatch({
+          type: page === 1 ? "SET_POPULAR_MOVIES" : "APPEND_POPULAR_MOVIES",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching popular movies:", error);
       }
-      setPopularMovies((prev) => {
-        const newMovies = filterHelper(data, prev);
-        return [...prev, ...newMovies];
-      });
-    } catch (error) {
-      console.error("Error fetching popular movies:", error);
-    }
-  }, []);
+    },
+    [dispatch]
+  );
 
-  const fetchTopRatedMoviesPage = useCallback(async (page: number) => {
-    try {
-      const data = await fetchTopRatedMovies(page);
-      if (page === 1) {
-        setTopRatedMovies(data);
-        return;
+  const fetchTopRatedMoviesPage = useCallback(
+    async (page: number) => {
+      try {
+        const data = await fetchTopRatedMovies(page);
+        dispatch({
+          type: page === 1 ? "SET_TOP_RATED_MOVIES" : "APPEND_TOP_RATED_MOVIES",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching top rated movies:", error);
       }
-      setTopRatedMovies((prev) => {
-        const newMovies = filterHelper(data, prev);
-        return [...prev, ...newMovies];
-      });
-    } catch (error) {
-      console.error("Error fetching top rated movies:", error);
-    }
-  }, []);
+    },
+    [dispatch]
+  );
 
-  const fetchTopRatedSeriesPage = useCallback(async (page: number) => {
-    try {
-      const data = await fetchTopRatedSeries(page);
-      if (page === 1) {
-        setTopRatedSeries(data);
-        return;
+  const fetchTopRatedSeriesPage = useCallback(
+    async (page: number) => {
+      try {
+        const data = await fetchTopRatedSeries(page);
+        dispatch({
+          type: page === 1 ? "SET_TOP_RATED_SERIES" : "APPEND_TOP_RATED_SERIES",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching top rated series:", error);
       }
-      setTopRatedSeries((prev) => {
-        const newSeries = filterHelper(data, prev);
-        return [...prev, ...newSeries];
-      });
-    } catch (error) {
-      console.error("Error fetching top rated series:", error);
-    }
-  }, []);
+    },
+    [dispatch]
+  );
 
-  const fetchPopularSeriesPage = useCallback(async (page: number) => {
-    try {
-      const data = await fetchPopularSeries(page);
-      if (page === 1) {
-        setPopularSeries(data);
-        return;
+  const fetchPopularSeriesPage = useCallback(
+    async (page: number) => {
+      try {
+        const data = await fetchPopularSeries(page);
+        dispatch({
+          type: page === 1 ? "SET_POPULAR_SERIES" : "APPEND_POPULAR_SERIES",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching popular series:", error);
       }
-      setPopularSeries((prev) => {
-        const newSeries = filterHelper(data, prev);
-        return [...prev, ...newSeries];
-      });
-    } catch (error) {
-      console.error("Error fetching popular series:", error);
-    }
-  }, []);
+    },
+    [dispatch]
+  );
 
-  const fetchMovieByName = useCallback(async (name: string, page: number) => {
-    try {
-      const data = await fetchMovies(name, page);
-      if (page === 1) {
-        setMovies(data);
-        return;
+  const fetchMovieByName = useCallback(
+    async (name: string, page: number) => {
+      try {
+        const data = await fetchMovies(name, page);
+        dispatch({
+          type: page === 1 ? "SET_MOVIES" : "APPEND_MOVIES",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching movies by name:", error);
       }
-      setMovies((prev) => {
-        const newMovies = filterHelper(data, prev);
-        return [...prev, ...newMovies];
-      });
-    } catch (error) {
-      console.error("Error fetching movies by name:", error);
-    }
-  }, []);
+    },
+    [dispatch]
+  );
 
-  const fetchSeriesByName = useCallback(async (name: string, page: number) => {
-    try {
-      const data = await fetchSeries(name, page);
-      if (page === 1) {
-        setSeries(data);
-        return;
+  const fetchSeriesByName = useCallback(
+    async (name: string, page: number) => {
+      try {
+        const data = await fetchSeries(name, page);
+        dispatch({
+          type: page === 1 ? "SET_SERIES" : "APPEND_SERIES",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching movies by name:", error);
       }
-      setSeries((prev) => {
-        const newSeries = filterHelper(data, prev);
-        return [...prev, ...newSeries];
-      });
-    } catch (error) {
-      console.error("Error fetching movies by name:", error);
-    }
-  }, []);
+    },
+    [dispatch]
+  );
 
   const memoValue = useMemo(
     () => ({
-      popularMovies,
-      topRatedMovies,
-      topRatedSeries,
-      popularSeries,
-      movies,
-      series,
+      ...state,
       fetchPopularMoviesPage,
       fetchTopRatedMoviesPage,
       fetchTopRatedSeriesPage,
@@ -154,12 +136,7 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
       fetchSeriesByName,
     }),
     [
-      popularMovies,
-      topRatedMovies,
-      topRatedSeries,
-      popularSeries,
-      movies,
-      series,
+      state,
       fetchPopularMoviesPage,
       fetchTopRatedMoviesPage,
       fetchTopRatedSeriesPage,
