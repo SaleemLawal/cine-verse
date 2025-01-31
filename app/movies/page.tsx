@@ -1,47 +1,72 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./movies.module.scss";
 import MovieGrid from "@/components/movieGrid/MovieGrid";
 import { Button } from "@/components/ui/button";
 import { useMovies } from "@/context/MoviesContext";
 import { useSearchParams } from "next/navigation";
+import Form from "@/components/form/Form";
+import { renderHelper } from "@/lib/utils";
 
 const MoviesPage = () => {
+  const { fetchPopularMoviesPage, fetchTopRatedMoviesPage, fetchMovieByName } =
+    useMovies();
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const searchParams = useSearchParams();
   const typeParam = searchParams.get("type");
 
-  const { fetchPopularMoviesPage, fetchTopRatedMoviesPage } = useMovies();
-  const [currentPage, setCurrentPage] = React.useState(1);
+  // check if search input is not empty, if it isnt, disregard the typeParam
+  // if search input is empty, then consider the typeParam
+  const renderType = renderHelper(searchQuery, typeParam, "movies");
 
   function handlePageChange(newPage: number) {
     setCurrentPage(newPage);
-    if (!typeParam || typeParam === "popular") {
+    if (searchQuery) {
+      fetchMovieByName(searchQuery, newPage);
+    } else if (!typeParam || typeParam === "popular") {
       fetchPopularMoviesPage(newPage);
-    } else {
+    } else if (typeParam === "top_rated") {
       fetchTopRatedMoviesPage(newPage);
     }
   }
 
+  const handleChange = (value: string) => {
+    setSearchQuery(value);
+  };
+
+  const handleMovieSearch = () => {
+    fetchMovieByName(searchQuery, 1);
+  };
+
   useEffect(() => {
     setCurrentPage(1);
-    if (!typeParam || typeParam === "popular") {
+    if (searchQuery) {
+      fetchMovieByName(searchQuery, 1);
+    } else if (!typeParam || typeParam === "popular") {
       fetchPopularMoviesPage(1);
-    } else {
+    } else if (typeParam === "top_rated") {
       fetchTopRatedMoviesPage(1);
     }
-  }, [typeParam, fetchPopularMoviesPage, fetchTopRatedMoviesPage]);
+  }, [
+    typeParam,
+    fetchPopularMoviesPage,
+    fetchTopRatedMoviesPage,
+    fetchMovieByName,
+    searchQuery,
+  ]);
 
   return (
     <div className={"wrapper"}>
       <main className={"page-content"}>
-        <MovieGrid
-          sectionType={
-            !typeParam || typeParam === "popular"
-              ? "popular movies"
-              : "top rated movies"
-          }
-          type="movies"
+        <Form
+          placeholder="Search movies..."
+          handleChange={handleChange}
+          inputValue={searchQuery}
+          handleMovieSearch={handleMovieSearch}
         />
+        <MovieGrid sectionType={renderType} type="movies" />
 
         <div className={styles["button-wrapper"]}>
           <Button

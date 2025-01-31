@@ -9,16 +9,15 @@ import { fetchVideos } from "@/api/movies/fetchMovies";
 import { VideoItem } from "@/types/Movie";
 
 const MovieBackdrop = () => {
-  const baseUrl = "https://image.tmdb.org/t/p/original";
   const { currentMovie, nextMovie, isTransitioning } = useNowPlayingBackdrop();
   const [showTrailerModal, setShowTrailerModal] = useState(false);
   const [trailerData, setTrailerData] = useState<VideoItem[]>([]);
 
   const currentImageUrl = currentMovie?.backdrop_path
-    ? `${baseUrl}${currentMovie.backdrop_path}`
+    ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${currentMovie.backdrop_path}`
     : "";
   const nextImageUrl = nextMovie?.backdrop_path
-    ? `${baseUrl}${nextMovie.backdrop_path}`
+    ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${nextMovie.backdrop_path}`
     : "";
 
   async function toggleTrailerModal() {
@@ -82,7 +81,7 @@ const MovieBackdrop = () => {
         <div className={styles.poster}>
           <Image
             className={styles.posterImage}
-            src={`${baseUrl}${currentMovie?.poster_path}`}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${currentMovie?.poster_path}`}
             alt={currentMovie?.original_title || ""}
             width={250}
             height={380}

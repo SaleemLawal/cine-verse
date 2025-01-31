@@ -28,3 +28,18 @@ export interface VideoItem {
   published_at: string;
   id: number;
 }
+
+export interface MoviesContextValue {
+  popularMovies: MovieItem[];
+  topRatedMovies: MovieItem[];
+  topRatedSeries: MovieItem[];
+  popularSeries: MovieItem[];
+  movies: MovieItem[];
+  series: MovieItem[];
+  fetchPopularMoviesPage: (page: number) => Promise<void>;
+  fetchTopRatedMoviesPage: (page: number) => Promise<void>;
+  fetchTopRatedSeriesPage: (page: number) => Promise<void>;
+  fetchPopularSeriesPage: (page: number) => Promise<void>;
+  fetchMovieByName: (name: string, page: number) => Promise<void>;
+  fetchSeriesByName: (name: string, page: number) => Promise<void>;
+}

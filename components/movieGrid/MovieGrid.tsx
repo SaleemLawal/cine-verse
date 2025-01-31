@@ -5,9 +5,21 @@ import { useMovies } from "@/context/MoviesContext";
 import MovieCard from "../movieCard/MovieCard";
 import { usePathname } from "next/navigation";
 
-const MovieGrid = ({ type, sectionType }: { type: string, sectionType?: string }) => {
-  const { popularMovies, topRatedMovies, topRatedSeries, popularSeries } =
-    useMovies();
+const MovieGrid = ({
+  type,
+  sectionType,
+}: {
+  type: string;
+  sectionType?: string;
+}) => {
+  const {
+    popularMovies,
+    topRatedMovies,
+    topRatedSeries,
+    popularSeries,
+    movies,
+    series,
+  } = useMovies();
   const pathname = usePathname();
 
   const movieMap = {
@@ -15,10 +27,13 @@ const MovieGrid = ({ type, sectionType }: { type: string, sectionType?: string }
     "top rated movies": topRatedMovies,
     "popular series": popularSeries,
     "top rated series": topRatedSeries,
+    "search movies": movies,
+    "search series": series,
   };
 
-  const movies = movieMap[sectionType as keyof typeof movieMap] || [];
-  const displayMovies = pathname === "/" ? movies.slice(0, 6) : movies;
+  const matchedMovies = movieMap[sectionType as keyof typeof movieMap] || [];
+  const displayMovies =
+    pathname === "/" ? matchedMovies.slice(0, 6) : matchedMovies;
 
   return (
     <>
@@ -32,7 +47,7 @@ const MovieGrid = ({ type, sectionType }: { type: string, sectionType?: string }
         {displayMovies.map((movie) => {
           return (
             <div
-              key={movie.original_title || movie.name}
+              key={`${movie.original_title || movie.name}-${movie.id}`}
               className={styles.grid__item}
             >
               <MovieCard movie={movie} type={type} />

@@ -56,3 +56,27 @@ export const fetchVideos = async (id?: number) => {
     throw error;
   }
 };
+
+export const fetchMovies = async (name: string, page: number = 1) => {
+  try {
+    const response = await apiClient.get(
+      `/search/movie?query=${name}&page=${page}`
+    );
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    throw error;
+  }
+};
+
+export const fetchSeries = async (name: string, page: number = 1) => {
+  try {
+    const response = await apiClient.get(
+      `/search/tv?query=${name}&page=${page}`
+    );
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    throw error;
+  }
+};

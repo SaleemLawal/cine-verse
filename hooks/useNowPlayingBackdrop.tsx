@@ -11,10 +11,6 @@ const useNowPlayingBackdrop = () => {
   const [nextMovie, setnextMovie] = useState<MovieItem | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  //   useEffect(() => {
-  //     fetchPopularMoviesPage(1);
-  //   }, [fetchPopularMoviesPage]);
-
   useEffect(() => {
     if (popularMovies.length > 0) {
       setcurrentMovie(popularMovies[0]);
