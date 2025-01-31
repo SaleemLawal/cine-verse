@@ -75,3 +75,24 @@ export const initialState = {
   movies: [],
   series: [],
 };
+
+export interface MoviePageContentProps {
+  searchQuery: string;
+  setSearchQuery: (value: string) => void;
+  typeParam: string | null;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  fetchPopularMoviesPage: (page: number) => Promise<void>;
+  fetchTopRatedMoviesPage: (page: number) => Promise<void>;
+  fetchMovieByName: (query: string, page: number) => Promise<void>;
+}
+export interface SeriesPageContentProps {
+  searchQuery: string;
+  setSearchQuery: (value: string) => void;
+  typeParam: string | null;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  fetchPopularSeriesPage: (page: number) => Promise<void>;
+  fetchTopRatedSeriesPage: (page: number) => Promise<void>;
+  fetchSeriesByName: (query: string, page: number) => Promise<void>;
+}

@@ -1,23 +1,67 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import MovieGrid from "@/components/movieGrid/MovieGrid";
 import styles from "./series.module.scss";
 import { Button } from "@/components/ui/button";
 import { useMovies } from "@/context/MoviesContext";
-import { useSearchParams } from "next/navigation";
 import Form from "@/components/form/Form";
 import { renderHelper } from "@/lib/utils";
+import SearchParamsComponent from "@/provider/SearchParamsProvider";
+import { SeriesPageContentProps } from "@/types/Movie";
 
 const SeriesPage = () => {
   const { fetchPopularSeriesPage, fetchTopRatedSeriesPage, fetchSeriesByName } =
     useMovies();
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [typeParam, setTypeParam] = useState<string | null>(null);
 
-  const searchParams = useSearchParams();
-  const typeParam = searchParams.get("type");
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchParamsComponent setTypeParam={setTypeParam} />
+      <PageContent
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        typeParam={typeParam}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        fetchPopularSeriesPage={fetchPopularSeriesPage}
+        fetchTopRatedSeriesPage={fetchTopRatedSeriesPage}
+        fetchSeriesByName={fetchSeriesByName}
+      />
+    </Suspense>
+  );
+};
 
+const PageContent = ({
+  searchQuery,
+  setSearchQuery,
+  typeParam,
+  currentPage,
+  setCurrentPage,
+  fetchPopularSeriesPage,
+  fetchTopRatedSeriesPage,
+  fetchSeriesByName,
+}: SeriesPageContentProps) => {
   const renderType = renderHelper(searchQuery, typeParam, "series");
+
+  useEffect(() => {
+    setCurrentPage(1);
+    if (searchQuery) {
+      fetchSeriesByName(searchQuery, 1);
+    } else if (!typeParam || typeParam === "popular") {
+      fetchPopularSeriesPage(1);
+    } else {
+      fetchTopRatedSeriesPage(1);
+    }
+  }, [
+    typeParam,
+    searchQuery,
+    fetchPopularSeriesPage,
+    fetchTopRatedSeriesPage,
+    fetchSeriesByName,
+    setCurrentPage,
+  ]);
 
   function handlePageChange(newPage: number) {
     setCurrentPage(newPage);
@@ -38,28 +82,11 @@ const SeriesPage = () => {
     fetchSeriesByName(searchQuery, 1);
   };
 
-  useEffect(() => {
-    setCurrentPage(1);
-    if (searchQuery) {
-      fetchSeriesByName(searchQuery, 1);
-    } else if (!typeParam || typeParam === "popular") {
-      fetchPopularSeriesPage(1);
-    } else {
-      fetchTopRatedSeriesPage(1);
-    }
-  }, [
-    typeParam,
-    fetchPopularSeriesPage,
-    fetchTopRatedSeriesPage,
-    searchQuery,
-    fetchSeriesByName,
-  ]);
-
   return (
     <div className={"wrapper"}>
       <main className={"page-content"}>
         <Form
-          placeholder="Search movies..."
+          placeholder="Search series..."
           handleChange={handleChange}
           inputValue={searchQuery}
           handleMovieSearch={handleSeriesSearch}
