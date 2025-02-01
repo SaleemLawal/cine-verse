@@ -9,7 +9,7 @@ const MovieCard = ({ movie, type }: { movie: MovieItem; type: string }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <div className={styles["movie-card"]}>
+    <div className={styles["movie-card"]} data-loaded={imageLoaded}>
       <div className={styles["movie-card__image"]}>
         <Link href={`/${type}/${movie?.id}`}>
           <Image
@@ -19,9 +19,7 @@ const MovieCard = ({ movie, type }: { movie: MovieItem; type: string }) => {
             alt={movie?.original_title || ""}
             width={250}
             height={380}
-            className={styles["movie-card__image-fade"]}
             loading="lazy"
-            data-loaded={imageLoaded}
             onLoad={() => setImageLoaded(true)}
           />
         </Link>

@@ -9,11 +9,15 @@ import React, {
 import {
   fetchPopularMovies,
   fetchTopRatedMovies,
+  fetchMovies,
+  fetchMoviesDetails,
+  fetchSimilarMoviesApi,
+} from "@/api/movies/fetchMovies";
+import {
   fetchTopRatedSeries,
   fetchPopularSeries,
-  fetchMovies,
   fetchSeries,
-} from "@/api/movies/fetchMovies";
+} from "@/api/series/fetchSeries";
 import { MoviesContextValue } from "@/types/Movie";
 import useContextReducer from "@/hooks/useContextReducer";
 
@@ -24,12 +28,16 @@ const MoviesContext = createContext<MoviesContextValue>({
   popularSeries: [],
   movies: [],
   series: [],
+  moviesDetail: null,
+  similarMovies: [],
   fetchPopularMoviesPage: async () => {},
   fetchTopRatedMoviesPage: async () => {},
   fetchTopRatedSeriesPage: async () => {},
   fetchPopularSeriesPage: async () => {},
   fetchMovieByName: async () => {},
   fetchSeriesByName: async () => {},
+  fetchMoviesById: async () => {},
+  fetchSimilarMovies: async () => {},
 });
 
 export function MoviesProvider({ children }: { children: React.ReactNode }) {
@@ -125,7 +133,37 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
     [dispatch]
   );
 
-  const memoValue = useMemo(
+  const fetchMoviesById = useCallback(
+    async (id: number) => {
+      try {
+        const data = await fetchMoviesDetails(id);
+        dispatch({
+          type: "SET_MOVIES_DETAIL",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching movies detail:", error);
+      }
+    },
+    [dispatch]
+  );
+
+  const fetchSimilarMovies = useCallback(
+    async (id: number) => {
+      try {
+        const data = await fetchSimilarMoviesApi(id);
+        dispatch({
+          type: "SET_SIMILAR_MOVIES",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching similar movies:", error);
+      }
+    },
+    [dispatch]
+  );
+
+  const values = useMemo(
     () => ({
       ...state,
       fetchPopularMoviesPage,
@@ -134,6 +172,8 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
       fetchPopularSeriesPage,
       fetchMovieByName,
       fetchSeriesByName,
+      fetchMoviesById,
+      fetchSimilarMovies,
     }),
     [
       state,
@@ -143,6 +183,8 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
       fetchPopularSeriesPage,
       fetchMovieByName,
       fetchSeriesByName,
+      fetchMoviesById,
+      fetchSimilarMovies,
     ]
   );
 
@@ -163,9 +205,7 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
   }, [fetchPopularSeriesPage]);
 
   return (
-    <MoviesContext.Provider value={memoValue}>
-      {children}
-    </MoviesContext.Provider>
+    <MoviesContext.Provider value={values}>{children}</MoviesContext.Provider>
   );
 }
 

@@ -18,7 +18,7 @@ const TrailerModal = ({
   return (
     <>
       <div className={styles.overlay} onClick={toggleTrailerModal} />
-      <div className={`text-red-700 text-5xl ${styles.trailer}`}>
+      <div className={`${styles.trailer}`}>
         <iframe
           width="570"
           height="320"

@@ -2,11 +2,7 @@
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
-const SearchParamsComponent = ({
-  setTypeParam,
-}: {
-  setTypeParam: (param: string | null) => void;
-}) => {
+const SearchParamsComponent = ({setTypeParam}: {setTypeParam: (param: string | null) => void}) => {
   const searchParams = useSearchParams();
   const typeParam = searchParams.get("type");
 

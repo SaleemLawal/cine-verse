@@ -6,15 +6,22 @@ import styles from "./Backdrop.module.scss";
 
 const Backdrop = () => {
   const pathName = usePathname();
+
   if (pathName === "/") {
     return <MovieBackdrop />;
-  } else {
+  } else if (pathName === "/movies" || pathName === "/series") {
     return (
       <div className={styles.bg}>
         <h2>{pathName === "/movies" ? "Movies" : "Series"}</h2>
       </div>
     );
   }
+
+  // return (
+  //   <div className={styles.bg}>
+  //     <h2>{title}</h2>
+  //   </div>
+  // );
 };
 
 export default Backdrop;

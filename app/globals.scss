@@ -31,11 +31,11 @@ a {
 }
 
 .wrapper {
+  color: white;
   background-color: $bg-body;
 }
 
 .page-content {
-  color: white;
   @include container;
   padding: 5rem 0 5rem 0;
 }

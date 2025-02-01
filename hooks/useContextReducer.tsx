@@ -1,14 +1,10 @@
 import { filterHelper } from "@/lib/utils";
-import {
-  //   MoviesContextValue,
-  MoviesState,
-  MoviesAction,
-  initialState,
-} from "@/types/Movie";
+import { MoviesState, MoviesAction, initialState } from "@/types/Movie";
 import { useReducer } from "react";
 
 const moviesReducer = (state: MoviesState, action: MoviesAction) => {
   let filtered = [];
+
   switch (action.type) {
     // popular movies
     case "SET_POPULAR_MOVIES":
@@ -73,6 +69,12 @@ const moviesReducer = (state: MoviesState, action: MoviesAction) => {
         ...state,
         series: [...state.series, ...filtered],
       };
+
+    case "SET_MOVIES_DETAIL":
+      return { ...state, moviesDetail: action.payload };
+
+    case "SET_SIMILAR_MOVIES":
+      return { ...state, similarMovies: action.payload };
   }
 };
 

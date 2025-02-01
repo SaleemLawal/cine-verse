@@ -21,16 +21,19 @@ const MovieSection = ({ sectionName, sectionType }: MovieSectionProps) => {
     <section className={styles["movie-section"]}>
       <div className={styles.section__header}>
         <h2>{sectionName}</h2>
-        <Button
-          className={`text-[1.5rem] px-6 py-5 rounded-full border-gray-400 ${styles.button}`}
-          variant="outline"
-        >
-          <LinkItem
-            href={`/${movieType}?type=${type}`}
-            name="View all"
-            active={false}
-          />
-        </Button>
+        {sectionType !== "similar movies" &&
+        sectionType !== "similar series" ? (
+          <Button
+            className={`text-[1.5rem] px-6 py-5 rounded-full border-gray-400 ${styles.button}`}
+            variant="outline"
+          >
+            <LinkItem
+              href={`/${movieType}?type=${type}`}
+              name="View all"
+              active={false}
+            />
+          </Button>
+        ) : null}
       </div>
 
       {/* GRID */}

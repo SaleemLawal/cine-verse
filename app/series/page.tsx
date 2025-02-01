@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useMovies } from "@/context/MoviesContext";
 import Form from "@/components/form/Form";
 import { renderHelper } from "@/lib/utils";
-import SearchParamsComponent from "@/provider/SearchParamsProvider";
+import SearchParamsComponent from "@/components/searchParam/SearchParamsProvider";
 import { SeriesPageContentProps } from "@/types/Movie";
 
 const SeriesPage = () => {
