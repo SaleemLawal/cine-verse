@@ -16,12 +16,6 @@ const Backdrop = () => {
       </div>
     );
   }
-
-  // return (
-  //   <div className={styles.bg}>
-  //     <h2>{title}</h2>
-  //   </div>
-  // );
 };
 
 export default Backdrop;
