@@ -4,6 +4,7 @@ import Header from "@/components/header/Header";
 import { MoviesProvider } from "@/context/MoviesContext";
 import Footer from "@/components/footer/Footer";
 import Backdrop from "@/components/backdrop/Backdrop";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "CineVerse",
@@ -24,6 +25,7 @@ export default function RootLayout({
           <div>{children}</div>
         </MoviesProvider>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
