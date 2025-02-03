@@ -22,7 +22,7 @@ const Similar = ({
           {/* <VideoEmbed embedUrl={`https://2embed.org/embed/movie/${id}`} /> */}
           <h2 className={`${styles.title} `}>Watch Movie</h2>
           <VideoEmbed embedUrl={`https://vidsrc.xyz/embed/movie/${id}`} />
-
+          
           {data?.videos?.results?.splice(0, 2).map((video) => {
             return (
               <div key={video.id} className={styles["video-container"]}>

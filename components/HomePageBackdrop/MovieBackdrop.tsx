@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import TrailerModal from "../Trailer/TrailerModal";
 import { fetchVideos } from "@/api/movies/fetchMovies";
 import { Video } from "@/types/Movie";
+import LinkItem from "../Link/LinkItem";
 
 const MovieBackdrop = () => {
   const { currentMovie, nextMovie, isTransitioning } = useNowPlayingBackdrop();
@@ -74,7 +75,11 @@ const MovieBackdrop = () => {
               size="lg"
               className={`text-[1.5rem] p-8 rounded-full border border-transparent ${styles.button} ${styles.button__watchNow}`}
             >
-              Watch Now
+              <LinkItem
+                href={`/movies/${currentMovie?.id}`}
+                name={"Watch Now"}
+                active={false}
+              />
             </Button>
           </div>
         </div>

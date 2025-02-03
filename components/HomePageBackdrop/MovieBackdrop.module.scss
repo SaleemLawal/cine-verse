@@ -85,6 +85,10 @@
         &__watchNow {
           background-color: rgb(255, 0, 0);
           box-shadow: $shadow-glow;
+
+          & a {
+            color: white;
+          }
         }
       }
     }
