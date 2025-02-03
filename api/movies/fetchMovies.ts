@@ -1,3 +1,4 @@
+import axios from "axios";
 import apiClient from "../apiClient";
 
 export const fetchPopularMovies = async (page: number = 1) => {
@@ -64,6 +65,16 @@ export const fetchVideos = async (id?: number) => {
     return response.data.results;
   } catch (error) {
     console.error("Error fetching now playing movies:", error);
+    throw error;
+  }
+};
+
+export const playMovie = async (id: number) => {
+  try {
+    const response = await axios.get(`https://2embed.org/embed/movie/${id}`);
+    console.log(response);
+  } catch (error) {
+    console.error("Error playing movies:", error);
     throw error;
   }
 };

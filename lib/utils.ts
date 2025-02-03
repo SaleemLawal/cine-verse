@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { MovieItem } from "@/types/Movie";
+import { MovieDetail, MovieItem, SeriesDetail } from "@/types/Movie";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -23,4 +23,9 @@ export const renderHelper = (searchQuery: string, typeParam: string | null, type
     renderType = `top rated ${type}`;
   }
   return renderType;
+};
+
+export const getTitle = (data: MovieDetail | SeriesDetail | null) => {
+  if (!data) return "";
+  return "original_title" in data ? data.original_title : data.name;
 };

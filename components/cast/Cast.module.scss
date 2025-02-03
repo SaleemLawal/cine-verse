@@ -1,0 +1,28 @@
+@use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
+.casts {
+  display: flex;
+  gap: 1.6rem;
+  margin-top: 1rem;
+
+  & .cast {
+    & img {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      border-radius: 1rem;
+    }
+
+    &[data-loaded="true"] {
+      img,
+      small {
+        opacity: 1;
+      }
+    }
+
+    & small {
+      opacity: 0;
+      font-size: 1.2rem;
+      color: $text-light-gray;
+    }
+  }
+}

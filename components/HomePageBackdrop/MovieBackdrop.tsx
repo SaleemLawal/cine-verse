@@ -6,12 +6,12 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import TrailerModal from "../Trailer/TrailerModal";
 import { fetchVideos } from "@/api/movies/fetchMovies";
-import { VideoItem } from "@/types/Movie";
+import { Video } from "@/types/Movie";
 
 const MovieBackdrop = () => {
   const { currentMovie, nextMovie, isTransitioning } = useNowPlayingBackdrop();
   const [showTrailerModal, setShowTrailerModal] = useState(false);
-  const [trailerData, setTrailerData] = useState<VideoItem[]>([]);
+  const [trailerData, setTrailerData] = useState<Video[]>([]);
 
   const currentImageUrl = currentMovie?.backdrop_path
     ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${currentMovie.backdrop_path}`

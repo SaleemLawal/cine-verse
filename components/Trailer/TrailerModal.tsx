@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import styles from "./Trailer.module.scss";
-import { VideoItem } from "@/types/Movie";
+import { Video } from "@/types/Movie";
 
 interface TrailerModalProps {
   toggleTrailerModal: () => void;
-  trailerData: VideoItem[];
+  trailerData: Video[];
 }
 
 const TrailerModal = ({

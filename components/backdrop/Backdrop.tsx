@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import MovieBackdrop from "@/components/HomePageBackdrop/MovieBackdrop";
 import { usePathname } from "next/navigation";
 import styles from "./Backdrop.module.scss";

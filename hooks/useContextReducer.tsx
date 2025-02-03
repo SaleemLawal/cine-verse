@@ -75,6 +75,12 @@ const moviesReducer = (state: MoviesState, action: MoviesAction) => {
 
     case "SET_SIMILAR_MOVIES":
       return { ...state, similarMovies: action.payload };
+
+    case "SET_SERIES_DETAIL":
+      return { ...state, seriesDetail: action.payload };
+
+    case "SET_SIMILAR_SERIES":
+      return { ...state, similarSeries: action.payload };
   }
 };
 

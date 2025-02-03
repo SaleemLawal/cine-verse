@@ -20,6 +20,7 @@ const MovieGrid = ({
     movies,
     series,
     similarMovies,
+    similarSeries,
   } = useMovies();
   const pathname = usePathname();
 
@@ -31,13 +32,17 @@ const MovieGrid = ({
     "search movies": movies,
     "search series": series,
     "similar movies": similarMovies,
+    "similar series": similarSeries,
   };
 
   const matchedMovies = movieMap[sectionType as keyof typeof movieMap] || [];
   let displayMovies = matchedMovies;
   if (pathname === "/") {
     displayMovies = matchedMovies.slice(0, 6);
-  } else if (sectionType === "similar movies") {
+  } else if (
+    sectionType === "similar movies" ||
+    sectionType === "similar series"
+  ) {
     displayMovies = matchedMovies.slice(0, 5);
   }
 

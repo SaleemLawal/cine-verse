@@ -16,7 +16,6 @@ const FormInput = ({
   handleMovieSearch: () => void;
 }) => {
   // local state for input value to avoid main page rerendering
-
   const [localInputValue, setLocalInputValue] = useState(inputValue);
 
   const handleLocalChange = (event: {

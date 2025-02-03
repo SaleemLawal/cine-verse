@@ -1,0 +1,25 @@
+@use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
+
+.title {
+  font-weight: 800;
+  font-size: 3.6rem;
+}
+
+.container {
+  overflow: hidden;
+  @include flexCenter;
+  flex-direction: column;
+  gap: 5rem;
+  margin-bottom: 5rem;
+
+  & h2 {
+    font-size: 2.4rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.video-container {
+  width: 92rem;
+  overflow: hidden;
+}

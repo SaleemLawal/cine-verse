@@ -17,6 +17,8 @@ import {
   fetchTopRatedSeries,
   fetchPopularSeries,
   fetchSeries,
+  fetchSeriesDetails,
+  fetchSimilarSeriesApi,
 } from "@/api/series/fetchSeries";
 import { MoviesContextValue } from "@/types/Movie";
 import useContextReducer from "@/hooks/useContextReducer";
@@ -30,6 +32,8 @@ const MoviesContext = createContext<MoviesContextValue>({
   series: [],
   moviesDetail: null,
   similarMovies: [],
+  seriesDetail: null,
+  similarSeries: [],
   fetchPopularMoviesPage: async () => {},
   fetchTopRatedMoviesPage: async () => {},
   fetchTopRatedSeriesPage: async () => {},
@@ -38,6 +42,8 @@ const MoviesContext = createContext<MoviesContextValue>({
   fetchSeriesByName: async () => {},
   fetchMoviesById: async () => {},
   fetchSimilarMovies: async () => {},
+  fetchSeriesById: async () => {},
+  fetchSimilarSeries: async () => {},
 });
 
 export function MoviesProvider({ children }: { children: React.ReactNode }) {
@@ -163,6 +169,38 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
     [dispatch]
   );
 
+  // series
+
+  const fetchSeriesById = useCallback(
+    async (id: number) => {
+      try {
+        const data = await fetchSeriesDetails(id);
+        dispatch({
+          type: "SET_SERIES_DETAIL",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching movies detail:", error);
+      }
+    },
+    [dispatch]
+  );
+
+  const fetchSimilarSeries = useCallback(
+    async (id: number) => {
+      try {
+        const data = await fetchSimilarSeriesApi(id);
+        dispatch({
+          type: "SET_SIMILAR_SERIES",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching similar movies:", error);
+      }
+    },
+    [dispatch]
+  );
+
   const values = useMemo(
     () => ({
       ...state,
@@ -174,6 +212,8 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
       fetchSeriesByName,
       fetchMoviesById,
       fetchSimilarMovies,
+      fetchSeriesById,
+      fetchSimilarSeries,
     }),
     [
       state,
@@ -185,6 +225,8 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
       fetchSeriesByName,
       fetchMoviesById,
       fetchSimilarMovies,
+      fetchSeriesById,
+      fetchSimilarSeries,
     ]
   );
 

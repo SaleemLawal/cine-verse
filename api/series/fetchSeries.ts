@@ -35,3 +35,27 @@ export const fetchSeries = async (name: string, page: number = 1) => {
     throw error;
   }
 };
+
+export const fetchSimilarSeriesApi = async (series_id: number) => {
+  try {
+    const response = await apiClient.get(`/tv/${series_id}/similar`);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching movies detail:", error);
+    throw error;
+  }
+};
+
+export const fetchSeriesDetails = async (series_id: number) => {
+  try {
+    const response = await apiClient.get(
+      `/tv/${series_id}?append_to_response=videos,credits&language=en-US`
+    );
+    console.log("series detail", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching movies detail:", error);
+    throw error;
+  }
+};

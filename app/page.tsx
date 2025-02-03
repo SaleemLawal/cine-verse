@@ -1,5 +1,5 @@
 import MovieSection from "@/components/movieSection/MovieSection";
-// import styles from "./page.module.scss";
+
 export default function Home() {
   return (
     <div className={"wrapper"}>
