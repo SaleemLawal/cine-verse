@@ -1,0 +1,173 @@
+@use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
+
+.container {
+  width: 100%;
+}
+
+.backdrop {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 3rem;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 3rem;
+  color: white;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.episodeHeader {
+  display: flex;
+  gap: 3rem;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.episodeInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.episodeTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+  color: white;
+}
+
+.meta {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.episodeNumber {
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: rgba(102, 126, 234, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #667eea;
+}
+
+.airDate,
+.runtime,
+.rating {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.overview {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 800px;
+}
+
+.trailerButton {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.stillImage {
+  flex-shrink: 0;
+  width: 500px;
+  height: 281px;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.watchSection {
+  margin: 4rem 0;
+  padding: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.watchTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: white;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.empty {
+  padding: 3rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .episodeHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stillImage {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .episodeTitle {
+    font-size: 2rem;
+  }
+
+  .content {
+    padding: 2rem;
+  }
+
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

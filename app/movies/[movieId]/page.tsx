@@ -15,6 +15,10 @@ const MovieDetailPage = () => {
   const [bgLoaded, setBgLoaded] = useState<boolean>(false);
   const { movieId } = useParams();
 
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "";
+  const posterPath = moviesDetail?.poster_path;
+  const posterImageUrl = imageBaseUrl && posterPath ? `${imageBaseUrl}${posterPath}` : null;
+
   useEffect(() => {
     async function fetchData() {
       await fetchMoviesById(parseInt(movieId as string));
@@ -31,29 +35,33 @@ const MovieDetailPage = () => {
       <div
         className={`${styles.overview} ${bgLoaded ? styles.loaded : ""}`}
         style={{
-          backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${moviesDetail?.poster_path})`,
+          backgroundImage: posterImageUrl ? `url(${posterImageUrl})` : "none",
         }}
       >
-        <Image
-          src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${moviesDetail?.poster_path}`}
-          alt=""
-          width={1}
-          height={1}
-          onLoad={() => setBgLoaded(true)}
-          style={{ display: "none" }}
-          priority
-        />
+        {posterImageUrl && (
+          <Image
+            src={posterImageUrl}
+            alt=""
+            width={1}
+            height={1}
+            onLoad={() => setBgLoaded(true)}
+            style={{ display: "none" }}
+            priority
+          />
+        )}
         <div className={`${styles.content} ${bgLoaded ? styles.visible : ""}`}>
-          <div className={styles.poster}>
-            <Image
-              className={styles.posterImage}
-              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${moviesDetail?.poster_path}`}
-              alt={moviesDetail?.original_title || ""}
-              width={250}
-              height={380}
-              priority
-            />
-          </div>
+          {posterImageUrl && (
+            <div className={styles.poster}>
+              <Image
+                className={styles.posterImage}
+                src={posterImageUrl}
+                alt={moviesDetail?.original_title || ""}
+                width={250}
+                height={380}
+                priority
+              />
+            </div>
+          )}
 
           <Detail
             data={moviesDetail}

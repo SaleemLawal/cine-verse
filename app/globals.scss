@@ -17,12 +17,16 @@
 
 html {
   font-size: 62.5%;
+  background-color: $bg-body;
 }
 
 body {
   color: $black;
   font-family: $font-nunito;
   font-size: 1.6rem;
+  background-color: $bg-body;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -38,6 +42,11 @@ a {
 .page-content {
   @include container;
   padding: 5rem 0 5rem 0;
+}
+
+.layout-content {
+  background-color: $bg-body;
+  min-height: 100vh;
 }
 
 @layer base {

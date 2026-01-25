@@ -29,7 +29,7 @@ export interface Video {
   id: number;
 }
 
-interface Episode {
+export interface Episode {
   id: number;
   name: string;
   overview: string;
@@ -45,7 +45,7 @@ interface Episode {
   still_path: string | null;
 }
 
-interface Season {
+export interface Season {
   air_date: string;
   episode_count: number;
   id: number;
@@ -54,6 +54,21 @@ interface Season {
   poster_path: string;
   season_number: number;
   vote_average: number;
+}
+
+export interface SeasonDetail {
+  _id: string;
+  air_date: string;
+  episodes: Episode[];
+  name: string;
+  overview: string;
+  id: number;
+  poster_path: string | null;
+  season_number: number;
+  vote_average: number;
+  videos?: {
+    results: Video[];
+  };
 }
 interface CastMember {
   adult: boolean;
@@ -240,6 +255,7 @@ export interface MoviesContextValue {
   similarMovies: MovieItem[];
   seriesDetail: SeriesDetail | null;
   similarSeries: MovieItem[];
+  seasonDetail: SeasonDetail | null;
   fetchPopularMoviesPage: (page: number) => Promise<void>;
   fetchTopRatedMoviesPage: (page: number) => Promise<void>;
   fetchTopRatedSeriesPage: (page: number) => Promise<void>;
@@ -250,6 +266,7 @@ export interface MoviesContextValue {
   fetchSimilarMovies: (id: number) => Promise<void>;
   fetchSeriesById: (id: number) => Promise<void>;
   fetchSimilarSeries: (id: number) => Promise<void>;
+  fetchSeasonDetails: (series_id: number, season_number: number) => Promise<void>;
 }
 
 export interface MoviesState {
@@ -263,6 +280,7 @@ export interface MoviesState {
   similarMovies: MovieItem[];
   seriesDetail: SeriesDetail | null;
   similarSeries: MovieItem[];
+  seasonDetail: SeasonDetail | null;
 }
 
 export type MoviesAction =
@@ -281,7 +299,8 @@ export type MoviesAction =
   | { type: "SET_MOVIES_DETAIL"; payload: MovieDetail }
   | { type: "SET_SIMILAR_MOVIES"; payload: MovieItem[] }
   | { type: "SET_SERIES_DETAIL"; payload: SeriesDetail }
-  | { type: "SET_SIMILAR_SERIES"; payload: MovieItem[] };
+  | { type: "SET_SIMILAR_SERIES"; payload: MovieItem[] }
+  | { type: "SET_SEASON_DETAIL"; payload: SeasonDetail };
 
 export const initialState = {
   popularMovies: [],
@@ -294,6 +313,7 @@ export const initialState = {
   similarMovies: [],
   similarSeries: [],
   seriesDetail: null,
+  seasonDetail: null,
 };
 
 export interface MoviePageContentProps {

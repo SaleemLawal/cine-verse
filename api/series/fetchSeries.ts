@@ -59,3 +59,15 @@ export const fetchSeriesDetails = async (series_id: number) => {
     throw error;
   }
 };
+
+export const fetchSeasonDetails = async (series_id: number, season_number: number) => {
+  try {
+    const response = await apiClient.get(
+      `/tv/${series_id}/season/${season_number}?append_to_response=videos&language=en-US`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching season details:", error);
+    throw error;
+  }
+};
