@@ -39,7 +39,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
     <div className={styles.resultsContainer}>
       <div className={styles.resultsHeader}>
         <span className={styles.resultsCount}>
-          {results.length} result{results.length !== 1 ? "s" : ""} for "{query}"
+          {results.length} result{results.length !== 1 ? "s" : ""} for &quot;{query}&quot;
         </span>
       </div>
       <div className={styles.resultsList}>

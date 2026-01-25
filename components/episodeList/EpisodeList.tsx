@@ -3,7 +3,6 @@ import React from "react";
 import { Episode } from "@/types/Movie";
 import Image from "next/image";
 import styles from "./EpisodeList.module.scss";
-import { Button } from "@/components/ui/button";
 
 interface EpisodeListProps {
   episodes: Episode[];

@@ -38,7 +38,7 @@ const SeriesDetailPage = () => {
       setSelectedEpisode(null);
     }
     fetchData();
-  }, [seriesId, fetchSeriesById, fetchSimilarSeries]);
+  }, [seriesId, seriesIdNum, fetchSeriesById, fetchSimilarSeries]);
 
   // Fetch season details when a season is selected
   useEffect(() => {

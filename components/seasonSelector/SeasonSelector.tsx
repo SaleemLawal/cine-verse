@@ -15,7 +15,6 @@ const SeasonSelector: React.FC<SeasonSelectorProps> = ({
   seasons,
   selectedSeason,
   onSelectSeason,
-  seriesId,
 }) => {
   // Filter out season 0 (specials) and sort by season number
   const validSeasons = seasons
