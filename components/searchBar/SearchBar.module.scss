@@ -37,12 +37,24 @@
 
 .input {
   flex: 1;
-  border: none;
-  outline: none;
+  border: none !important;
+  outline: none !important;
   background: transparent;
   font-size: 1.1rem;
   color: $text-light-gray;
   padding: 0;
+  box-shadow: none !important;
+
+  &:focus,
+  &:focus-visible,
+  &:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    --tw-ring-offset-width: 0px !important;
+    --tw-ring-width: 0px !important;
+    --tw-ring-color: transparent !important;
+  }
 
   &::placeholder {
     color: rgba(255, 255, 255, 0.5);

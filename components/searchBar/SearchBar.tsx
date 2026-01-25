@@ -104,7 +104,7 @@ const SearchBar = () => {
           value={query}
           onChange={handleInputChange}
           placeholder="Search for movies or TV shows..."
-          className={styles.input}
+          className={`${styles.input} focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none`}
         />
         {query && (
           <button
