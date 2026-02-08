@@ -14,12 +14,18 @@ const MovieBackdrop = () => {
   const [showTrailerModal, setShowTrailerModal] = useState(false);
   const [trailerData, setTrailerData] = useState<Video[]>([]);
 
-  const currentImageUrl = currentMovie?.backdrop_path
-    ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${currentMovie.backdrop_path}`
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "";
+  
+  const currentImageUrl = currentMovie?.backdrop_path && imageBaseUrl
+    ? `${imageBaseUrl}${currentMovie.backdrop_path}`
     : "";
-  const nextImageUrl = nextMovie?.backdrop_path
-    ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${nextMovie.backdrop_path}`
+  const nextImageUrl = nextMovie?.backdrop_path && imageBaseUrl
+    ? `${imageBaseUrl}${nextMovie.backdrop_path}`
     : "";
+  
+  const posterImageUrl = currentMovie?.poster_path && imageBaseUrl
+    ? `${imageBaseUrl}${currentMovie.poster_path}`
+    : null;
 
   async function toggleTrailerModal() {
     if (!showTrailerModal && currentMovie?.id) {
@@ -83,16 +89,18 @@ const MovieBackdrop = () => {
             </Button>
           </div>
         </div>
-        <div className={styles.poster}>
-          <Image
-            className={styles.posterImage}
-            src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${currentMovie?.poster_path}`}
-            alt={currentMovie?.original_title || ""}
-            width={250}
-            height={380}
-            priority
-          />
-        </div>
+        {posterImageUrl && (
+          <div className={styles.poster}>
+            <Image
+              className={styles.posterImage}
+              src={posterImageUrl}
+              alt={currentMovie?.original_title || ""}
+              width={250}
+              height={380}
+              priority
+            />
+          </div>
+        )}
       </div>
       {showTrailerModal && (
         <TrailerModal

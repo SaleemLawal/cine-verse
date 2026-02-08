@@ -22,7 +22,7 @@ export default function RootLayout({
         <MoviesProvider>
           <Backdrop />
           <Header />
-          <div>{children}</div>
+          <div className="layout-content">{children}</div>
         </MoviesProvider>
         <Footer />
         <Analytics />

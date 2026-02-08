@@ -19,18 +19,21 @@ const Similar = ({
     <div className={"wrapper"}>
       <main className={"page-content"}>
         <div className={styles["container"]}>
-          {/* <VideoEmbed embedUrl={`https://2embed.org/embed/movie/${id}`} /> */}
-          <h2 className={`${styles.title} `}>Watch Movie</h2>
-          <VideoEmbed embedUrl={`https://vidsrc.xyz/embed/movie/${id}`} />
+          {sectionName.includes("Movies") && id ? (
+            <div className={styles.watchMovieSection}>
+              <h2 className={styles.title}>Watch Movie</h2>
+              <VideoEmbed embedUrl={`https://vidsrc.xyz/embed/movie/${id}`} />
+            </div>
+          ) : null}
           
-          {data?.videos?.results?.splice(0, 2).map((video) => {
+          {data?.videos?.results?.slice(0, 2).map((video) => {
             return (
               <div key={video.id} className={styles["video-container"]}>
-                <h2 className={`${styles.title} `}>{video.name}</h2>
+                <h2 className={styles.title}>{video.name}</h2>
                 <iframe
-                  width="912"
-                  height="480"
                   src={`https://www.youtube.com/embed/${video.key}`}
+                  allowFullScreen
+                  frameBorder="0"
                 />
               </div>
             );

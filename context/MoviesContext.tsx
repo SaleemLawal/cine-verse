@@ -19,6 +19,7 @@ import {
   fetchSeries,
   fetchSeriesDetails,
   fetchSimilarSeriesApi,
+  fetchSeasonDetails,
 } from "@/api/series/fetchSeries";
 import { MoviesContextValue } from "@/types/Movie";
 import useContextReducer from "@/hooks/useContextReducer";
@@ -34,6 +35,7 @@ const MoviesContext = createContext<MoviesContextValue>({
   similarMovies: [],
   seriesDetail: null,
   similarSeries: [],
+  seasonDetail: null,
   fetchPopularMoviesPage: async () => {},
   fetchTopRatedMoviesPage: async () => {},
   fetchTopRatedSeriesPage: async () => {},
@@ -44,6 +46,7 @@ const MoviesContext = createContext<MoviesContextValue>({
   fetchSimilarMovies: async () => {},
   fetchSeriesById: async () => {},
   fetchSimilarSeries: async () => {},
+  fetchSeasonDetails: async () => {},
 });
 
 export function MoviesProvider({ children }: { children: React.ReactNode }) {
@@ -201,6 +204,21 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
     [dispatch]
   );
 
+  const fetchSeasonDetailsById = useCallback(
+    async (series_id: number, season_number: number) => {
+      try {
+        const data = await fetchSeasonDetails(series_id, season_number);
+        dispatch({
+          type: "SET_SEASON_DETAIL",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching season details:", error);
+      }
+    },
+    [dispatch]
+  );
+
   const values = useMemo(
     () => ({
       ...state,
@@ -214,6 +232,7 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
       fetchSimilarMovies,
       fetchSeriesById,
       fetchSimilarSeries,
+      fetchSeasonDetails: fetchSeasonDetailsById,
     }),
     [
       state,
@@ -227,6 +246,7 @@ export function MoviesProvider({ children }: { children: React.ReactNode }) {
       fetchSimilarMovies,
       fetchSeriesById,
       fetchSimilarSeries,
+      fetchSeasonDetailsById,
     ]
   );
 
